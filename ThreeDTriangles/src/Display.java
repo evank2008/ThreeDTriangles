@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 
 public class Display extends JPanel{
 
-	int width=600,height=600;
+	public static int width=600,height=600;
 	JFrame frame;
 	Camera camera;
 	//x is left to right
@@ -19,7 +19,13 @@ public class Display extends JPanel{
 		frame.add(this);
 		frame.setVisible(true);
 		
-		camera=new Camera(new Point3D(width/2,height/2,0),new Point3D(),90);
+		camera=new Camera(new Point3D(width/2,height/2,-100),new Point3D(width/2,height/2,1),90);
+		new Triangle3D(
+				new Point3D(300,100,200),
+				new Point3D(500,300,200),
+				new Point3D(100,300,200)
+				);
+		this.addKeyListener(camera);
 	}
 	@Override
 	public void paintComponent(Graphics g) {

@@ -7,5 +7,6 @@ public class Triangle3D {
 		points[0]=p1;
 		points[1]=p2;
 		points[2]=p3;
+		ThreeDTriangles.triangles.add(this);
 	}
 }

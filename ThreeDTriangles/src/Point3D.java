@@ -49,4 +49,17 @@ public Point3D getUnitVectorFrom(Point3D p) {
 public double dot(Point3D p) {
 	return p.x*x+p.y*y+p.z*z;
 }
+public Point3D cross(Point3D o) {
+	return new Point3D(
+	        y * o.z - z * o.y,
+	        z * o.x - x * o.z,
+	        x * o.y - y * o.x
+	    );
+}
+public void move(double distance, Point3D direction) {
+	Point3D dir = direction.getUnitVector();
+	x+=dir.x*distance;
+	y+=dir.y*distance;
+	z+=dir.z*distance;
+}
 }
