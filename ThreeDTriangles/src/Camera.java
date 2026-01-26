@@ -9,7 +9,6 @@ import java.util.HashMap;
 import javax.swing.Timer;
 
 public class Camera implements KeyListener, ActionListener{
-	Timer moveTimer = new Timer(1000/60,this);
 	int speed=10;
 	HashMap<Character,Boolean> keysPressed=new HashMap<Character,Boolean>(6,1.1f);
 //it has to end in a rectangle of display's width and height
@@ -45,7 +44,6 @@ public class Camera implements KeyListener, ActionListener{
 			
 			Point3D forward=viewTarget, right=new Point3D(0,1,0).cross(viewTarget).getUnitVector(),up=right.cross(forward);
 			double xCam=point.dot(right),yCam=point.dot(up),zCam=point.dot(forward);
-			System.out.println("zCam = "+zCam);
 			if(zCam<=0) return;
 			double scale = 1/Math.tan(fovRadians/2);
 			double x_ndc = (xCam / zCam) * scale;
@@ -82,26 +80,31 @@ public class Camera implements KeyListener, ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource()==moveTimer) {
+		
 			for(char c: keysPressed.keySet()) {
 				if(keysPressed.get(c)) {
+					System.out.println("key is pressed, attempting move");
 					switch(c) {
 					case 'w':
 						position.move(speed, viewTarget);
 						break;
 					case 'a':
+						position.move(speed, viewTarget.cross(new Point3D(0,1,0)));
 						break;
 					case 's':
+						position.move(-speed, viewTarget);
 						break;
 					case 'd':
+						position.move(-speed, viewTarget.cross(new Point3D(0,1,0)));
 						break;
 					case 'z':
+						position.move(-speed, viewTarget.cross(new Point3D(0,1,0)).cross(viewTarget));
 						break;
 					case 'x':
+						position.move(speed, viewTarget.cross(new Point3D(0,1,0)).cross(viewTarget));
 						break;
 					}
 				}
-			}
 		}
 	}
 }
