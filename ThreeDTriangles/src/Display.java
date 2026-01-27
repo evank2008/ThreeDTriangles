@@ -27,7 +27,7 @@ public class Display extends JPanel implements ActionListener, KeyListener{
 		frame.add(this);
 		frame.setVisible(true);
 		
-		camera=new Camera(new Point3D(width/2,height/2,-100),new Point3D(width/2,height/2,1),90);
+		camera=new Camera(new Point3D(width/2,height/2,-400),new Point3D(width/2,height/2,1),60);
 		new Triangle3D(
 				new Point3D(300,100,200),
 				new Point3D(500,300,200),

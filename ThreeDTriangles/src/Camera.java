@@ -10,6 +10,7 @@ import javax.swing.Timer;
 
 public class Camera implements KeyListener, ActionListener{
 	int speed=10;
+	double rotSpeed=Math.PI/100;
 	HashMap<Integer,Boolean> keysPressed=new HashMap<Integer,Boolean>(10,1.1f);
 //it has to end in a rectangle of display's width and height
 	Point3D position;
@@ -108,23 +109,20 @@ public class Camera implements KeyListener, ActionListener{
 						break;
 					case KeyEvent.VK_UP:
 						//rotate up
-						viewTarget.y-=0.03;
-						viewTarget=viewTarget.getUnitVector();
-						break;
+					    viewTarget = viewTarget.rotateAroundAxis(viewTarget.cross(new Point3D(0,1,0)).getUnitVector(), -rotSpeed);
+					    break;
 					case KeyEvent.VK_DOWN:
 						//rotate down
-						viewTarget.y+=0.03;
-						viewTarget=viewTarget.getUnitVector();
+					    viewTarget = viewTarget.rotateAroundAxis(viewTarget.cross(new Point3D(0,1,0)).getUnitVector(), rotSpeed);
 						break;
 					case KeyEvent.VK_LEFT:
 						//rotate left
-						viewTarget.x-=0.03;
-						viewTarget=viewTarget.getUnitVector();
+					    viewTarget = viewTarget.rotateAroundAxis(viewTarget.cross(new Point3D(0,1,0)).cross(viewTarget).getUnitVector(), -rotSpeed);
+
 						break;
 					case KeyEvent.VK_RIGHT:
 						//rotate right
-						viewTarget.x+=0.03;
-						viewTarget=viewTarget.getUnitVector();
+					    viewTarget = viewTarget.rotateAroundAxis(viewTarget.cross(new Point3D(0,1,0)).cross(viewTarget).getUnitVector(), rotSpeed);
 						break;
 					}
 				}

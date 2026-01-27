@@ -30,6 +30,20 @@ public Point3D subtract(Point3D p) {
 	pp.z-=p.z;
 	return pp;
 }
+public Point3D add(Point3D p) {
+	Point3D pp = new Point3D(this);
+	pp.x+=p.x;
+	pp.y+=p.y;
+	pp.z+=p.z;
+	return pp;
+}
+public Point3D multiply(double p) {
+	Point3D pp = new Point3D(this);
+	pp.x*=p;
+	pp.y*=p;
+	pp.z*=p;
+	return pp;
+}
 public Point3D getUnitVector() {
 	//with respect to (0,0,0)
 	Point3D p = new Point3D(this);
@@ -62,4 +76,20 @@ public void move(double distance, Point3D direction) {
 	y+=dir.y*distance;
 	z+=dir.z*distance;
 }
+public Point3D rotateAroundAxis(Point3D axis, double angleRadians) {
+    axis = axis.getUnitVector();
+
+    double cos = Math.cos(angleRadians);
+    double sin = Math.sin(angleRadians);
+
+    Point3D term1 = multiply(cos);
+    Point3D term2 = axis.cross(this).multiply(sin);
+    Point3D term3 = axis.multiply(axis.dot(this) * (1 - cos));
+
+    return term1.add(term2).add(term3).getUnitVector();
+}
+public String toString() {
+	return "("+x+", "+y+", "+z+")";
+}
+
 }
