@@ -70,11 +70,12 @@ public class Camera implements KeyListener, ActionListener{
 		
 		//now that that's done...
 		
-		g.setColor(Color.red);
+		g.setColor(triangle.c);
 		g.fillPolygon(xPoints, yPoints, 3);
+		if(triangle.drawBorder) {
 		g.setColor(Color.black);
 		g.drawPolygon(xPoints, yPoints, 3);
-
+		}
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {
