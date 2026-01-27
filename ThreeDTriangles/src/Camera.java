@@ -10,7 +10,7 @@ import javax.swing.Timer;
 
 public class Camera implements KeyListener, ActionListener{
 	int speed=10;
-	HashMap<Character,Boolean> keysPressed=new HashMap<Character,Boolean>(6,1.1f);
+	HashMap<Integer,Boolean> keysPressed=new HashMap<Integer,Boolean>(10,1.1f);
 //it has to end in a rectangle of display's width and height
 	Point3D position;
 	Point3D viewTarget;//unit vector
@@ -21,12 +21,16 @@ public class Camera implements KeyListener, ActionListener{
 		viewTarget=new Point3D(0,0,1);
 		fov=90;
 		fovRadians=Math.toRadians(fov);
-		keysPressed.put('w', false);
-		keysPressed.put('a', false);
-		keysPressed.put('s', false);
-		keysPressed.put('d', false);
-		keysPressed.put('z', false);
-		keysPressed.put('x', false);
+		keysPressed.put(KeyEvent.VK_W, false);
+		keysPressed.put(KeyEvent.VK_A, false);
+		keysPressed.put(KeyEvent.VK_S, false);
+		keysPressed.put(KeyEvent.VK_D, false);
+		keysPressed.put(KeyEvent.VK_Z, false);
+		keysPressed.put(KeyEvent.VK_X, false);
+		keysPressed.put(KeyEvent.VK_UP, false);
+		keysPressed.put(KeyEvent.VK_DOWN, false);
+		keysPressed.put(KeyEvent.VK_LEFT, false);
+		keysPressed.put(KeyEvent.VK_RIGHT, false);
 	}
 	public Camera(Point3D pos, Point3D view, int fov) {
 		super();
@@ -70,38 +74,57 @@ public class Camera implements KeyListener, ActionListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		keysPressed.put(e.getKeyChar(), true);
+		keysPressed.put(e.getKeyCode(), true);
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		keysPressed.put(e.getKeyChar(), false);
+		keysPressed.put(e.getKeyCode(), false);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
-			for(char c: keysPressed.keySet()) {
+			for(int c: keysPressed.keySet()) {
 				if(keysPressed.get(c)) {
-					System.out.println("key is pressed, attempting move");
 					switch(c) {
-					case 'w':
+					case KeyEvent.VK_W:
 						position.move(speed, viewTarget);
 						break;
-					case 'a':
+					case KeyEvent.VK_A:
 						position.move(speed, viewTarget.cross(new Point3D(0,1,0)));
 						break;
-					case 's':
+					case KeyEvent.VK_S:
 						position.move(-speed, viewTarget);
 						break;
-					case 'd':
+					case KeyEvent.VK_D:
 						position.move(-speed, viewTarget.cross(new Point3D(0,1,0)));
 						break;
-					case 'z':
+					case KeyEvent.VK_Z:
 						position.move(-speed, viewTarget.cross(new Point3D(0,1,0)).cross(viewTarget));
 						break;
-					case 'x':
+					case KeyEvent.VK_X:
 						position.move(speed, viewTarget.cross(new Point3D(0,1,0)).cross(viewTarget));
+						break;
+					case KeyEvent.VK_UP:
+						//rotate up
+						viewTarget.y-=0.03;
+						viewTarget=viewTarget.getUnitVector();
+						break;
+					case KeyEvent.VK_DOWN:
+						//rotate down
+						viewTarget.y+=0.03;
+						viewTarget=viewTarget.getUnitVector();
+						break;
+					case KeyEvent.VK_LEFT:
+						//rotate left
+						viewTarget.x-=0.03;
+						viewTarget=viewTarget.getUnitVector();
+						break;
+					case KeyEvent.VK_RIGHT:
+						//rotate right
+						viewTarget.x+=0.03;
+						viewTarget=viewTarget.getUnitVector();
 						break;
 					}
 				}

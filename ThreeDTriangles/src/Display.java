@@ -61,7 +61,6 @@ public class Display extends JPanel implements ActionListener, KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("key press");
 		camera.keyPressed(e);
 	}
 	@Override
