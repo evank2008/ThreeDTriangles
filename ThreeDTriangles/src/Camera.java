@@ -15,6 +15,7 @@ public class Camera implements KeyListener, ActionListener{
 //it has to end in a rectangle of display's width and height
 	Point3D position;
 	Point3D viewTarget;//unit vector
+	Point3D up, right;
 	int fov;
 	double fovRadians;
 	public Camera() {
@@ -32,6 +33,9 @@ public class Camera implements KeyListener, ActionListener{
 		keysPressed.put(KeyEvent.VK_DOWN, false);
 		keysPressed.put(KeyEvent.VK_LEFT, false);
 		keysPressed.put(KeyEvent.VK_RIGHT, false);
+		Point3D worldUp = new Point3D(0,1,0);
+		right = worldUp.cross(viewTarget).getUnitVector();
+		 up = viewTarget.cross(right).getUnitVector();
 	}
 	public Camera(Point3D pos, Point3D view, int fov) {
 		super();
@@ -39,7 +43,12 @@ public class Camera implements KeyListener, ActionListener{
 		viewTarget=view.getUnitVectorFrom(pos);
 		this.fov=fov;
 		fovRadians=Math.toRadians(fov);
+		Point3D worldUp = new Point3D(0,1,0);
+		 right = worldUp.cross(viewTarget).getUnitVector();
+		 up    = viewTarget.cross(right).getUnitVector();
 	}
+	
+		
 	public void drawTriangle(Graphics g, Triangle3D triangle) {
 		//no concern for any  other triangles
 		int[]xPoints = new int[3], yPoints=new int[3];
@@ -109,21 +118,29 @@ public class Camera implements KeyListener, ActionListener{
 						break;
 					case KeyEvent.VK_UP:
 						//rotate up
-					    viewTarget = viewTarget.rotateAroundAxis(viewTarget.cross(new Point3D(0,1,0)).getUnitVector(), -rotSpeed);
-					    break;
+						viewTarget = viewTarget.rotateAroundAxis(right, rotSpeed);
+						up = up.rotateAroundAxis(right, rotSpeed);
+						right = up.cross(viewTarget).getUnitVector();
+						up    = viewTarget.cross(right).getUnitVector();
+						break;
 					case KeyEvent.VK_DOWN:
 						//rotate down
 					    viewTarget = viewTarget.rotateAroundAxis(viewTarget.cross(new Point3D(0,1,0)).getUnitVector(), rotSpeed);
-						break;
+					    right = up.cross(viewTarget).getUnitVector();
+					    up    = viewTarget.cross(right).getUnitVector();
+					    break;
 					case KeyEvent.VK_LEFT:
 						//rotate left
 					    viewTarget = viewTarget.rotateAroundAxis(viewTarget.cross(new Point3D(0,1,0)).cross(viewTarget).getUnitVector(), -rotSpeed);
-
+					    right = up.cross(viewTarget).getUnitVector();
+					    up    = viewTarget.cross(right).getUnitVector();
 						break;
 					case KeyEvent.VK_RIGHT:
 						//rotate right
 					    viewTarget = viewTarget.rotateAroundAxis(viewTarget.cross(new Point3D(0,1,0)).cross(viewTarget).getUnitVector(), rotSpeed);
-						break;
+					    right = up.cross(viewTarget).getUnitVector();
+					    up    = viewTarget.cross(right).getUnitVector();
+					    break;
 					}
 				}
 		}
