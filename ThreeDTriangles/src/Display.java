@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,10 +29,53 @@ public class Display extends JPanel implements ActionListener, KeyListener{
 		frame.setVisible(true);
 		
 		camera=new Camera(new Point3D(width/2,height/2,-200),new Point3D(width/2,height/2,1),90);
+		//a new Point3D(100,100,100)
+		//b new Point3D(100,100,200)
+		//c new Point3D(200,100,200)
+		//d new Point3D(200,100,100)
+		//e new Point3D(100,200,100)
+		//f new Point3D(200,200,100)
+
 		new Triangle3D(
-				new Point3D(300,100,200),
-				new Point3D(500,300,200),
-				new Point3D(100,300,200)
+				new Point3D(100,100,100),
+				new Point3D(200,100,200),
+				new Point3D(100,100,200), Color.red, false
+				);
+		new Triangle3D(
+				new Point3D(100,100,100),
+				new Point3D(200,100,100),
+				new Point3D(200,100,200),Color.red, false
+				);
+		new Triangle3D(
+				new Point3D(100,100,100),
+				new Point3D(100,200,100),
+				new Point3D(200,100,100), Color.red,false
+				);
+		new Triangle3D(
+				new Point3D(100,200,100),
+				new Point3D(200,200,100),
+				new Point3D(200,100,100), Color.red,false
+				);
+		new Triangle3D(
+				new Point3D(100,200,100),
+				new Point3D(200,200,100),
+				new Point3D(100,100,200), false
+				);
+		///fcb
+		new Triangle3D(
+				new Point3D(200,200,100),
+				new Point3D(200,100,200),
+				new Point3D(100,100,200), false
+				);
+		new Triangle3D(
+				new Point3D(100,100,100),
+				new Point3D(100,200,100),
+				new Point3D(100,100,200),Color.red
+				);
+		new Triangle3D(
+				new Point3D(200,200,100),
+				new Point3D(200,100,200),
+				new Point3D(200,100,100),Color.red
 				);
 		addKeyListener(this);
 		this.setFocusable(true);
